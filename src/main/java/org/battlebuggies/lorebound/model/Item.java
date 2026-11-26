@@ -1,0 +1,4 @@
+package org.battlebuggies.lorebound.model;
+
+public record Item() {
+}
