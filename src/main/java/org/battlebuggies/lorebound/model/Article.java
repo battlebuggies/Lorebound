@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,11 +32,15 @@ public class Article {
     private boolean status;
     private String type;
 
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "json")
-    private Map<String, Object> attributes;
 
-    public Article(int id, Campaign campaign, String title, Set<Tag> tags, String body, String imgPath, boolean status, String type, Map<String, Object> attributes) {
+    @OneToMany
+    private List<AttributeInfo> attribute;
+
+
+    public Article(int id, Campaign campaign,
+                   String title, Set<Tag> tags,
+                   String body, String imgPath,
+                   boolean status, String type, List<AttributeInfo> attribute) {
         this.id = id;
         this.campaign = campaign;
         this.title = title;
@@ -44,7 +49,7 @@ public class Article {
         this.imgPath = imgPath;
         this.status = status;
         this.type = type;
-        this.attributes = attributes;
+        this.attribute = attribute;
     }
 
     public Article(){
@@ -107,19 +112,19 @@ public class Article {
         this.type = type;
     }
 
-    public Map<String, Object> getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(Map<String, Object> attributes) {
-        this.attributes = attributes;
-    }
-
-    public Set<Tag> getTags() {
+       public Set<Tag> getTags() {
         return tags;
     }
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    public List<AttributeInfo> getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(List<AttributeInfo> attribute) {
+        this.attribute = attribute;
     }
 }
