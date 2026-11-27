@@ -1,11 +1,8 @@
 package org.battlebuggies.lorebound.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -16,31 +13,36 @@ public class Article {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "campaign")
+    @JoinColumn(name = "campaign_id")
     private Campaign campaign;
 
     private String title;
 
     @ManyToMany
     @JoinTable(
-            name = "tag"
+            name = "article_tag",
+            joinColumns = @JoinColumn(name = "article_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags;
 
     private String body;
     private String imgPath;
     private boolean status;
-    private String type;
+
+    @ManyToOne
+    @JoinColumn(name = "article_type_id")
+    private ArticleType articleType;
 
 
-    @OneToMany
-    private List<AttributeInfo> attribute;
+    @OneToMany(mappedBy = "article")
+    private List<FieldValue> fields;
 
 
     public Article(int id, Campaign campaign,
                    String title, Set<Tag> tags,
                    String body, String imgPath,
-                   boolean status, String type, List<AttributeInfo> attribute) {
+                   boolean status, ArticleType articleType, List<FieldValue> fields) {
         this.id = id;
         this.campaign = campaign;
         this.title = title;
@@ -48,11 +50,11 @@ public class Article {
         this.body = body;
         this.imgPath = imgPath;
         this.status = status;
-        this.type = type;
-        this.attribute = attribute;
+        this.articleType = articleType;
+        this.fields = fields;
     }
 
-    public Article(){
+    public Article() {
 
     }
 
@@ -104,15 +106,15 @@ public class Article {
         this.status = status;
     }
 
-    public String getType() {
-        return type;
+    public ArticleType getType() {
+        return articleType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setType(ArticleType type) {
+        this.articleType = type;
     }
 
-       public Set<Tag> getTags() {
+    public Set<Tag> getTags() {
         return tags;
     }
 
@@ -120,11 +122,11 @@ public class Article {
         this.tags = tags;
     }
 
-    public List<AttributeInfo> getAttribute() {
-        return attribute;
+    public List<FieldValue> getFields() {
+        return fields;
     }
 
-    public void setAttribute(List<AttributeInfo> attribute) {
-        this.attribute = attribute;
+    public void setFields(List<FieldValue> fields) {
+        this.fields = fields;
     }
 }

@@ -2,11 +2,10 @@ package org.battlebuggies.lorebound.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
-public class Attribute {
+public class TemplateField {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,11 +13,14 @@ public class Attribute {
 
     private String title;
 
-    @OneToMany
-    private Set<AttributeInfo> attributeInfo;
+    @OneToMany(mappedBy = "templateField")
+    private Set<FieldValue> fieldValue;
 
-    public Attribute() {}
-    public Attribute(int id, String title) {
+    @ManyToMany(mappedBy = "fields")
+    private Set<ArticleType> articleTypes;
+
+    public TemplateField() {}
+    public TemplateField(int id, String title) {
         this.id = id;
         this.title = title;
     }
@@ -39,11 +41,11 @@ public class Attribute {
         this.title = title;
     }
 
-    public Set<AttributeInfo> getAttributeInfo() {
-        return attributeInfo;
+    public Set<FieldValue> getAttributeInfo() {
+        return fieldValue;
     }
 
-    public void setAttributeInfo(Set<AttributeInfo> attributeInfo) {
-        this.attributeInfo = attributeInfo;
+    public void setAttributeInfo(Set<FieldValue> fieldValue) {
+        this.fieldValue = fieldValue;
     }
 }
