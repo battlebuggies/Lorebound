@@ -18,6 +18,7 @@ public class SessionLog {
     private LocalDate createdAt;
 
     @ManyToOne
+    @JoinColumn(name = "campaign_id")
     private Campaign campaign;
 
 

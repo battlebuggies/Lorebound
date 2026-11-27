@@ -11,8 +11,7 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToMany
-    @JoinTable(name = "article")
+    @ManyToMany(mappedBy = "tags")
     private Set<Article> articles;
 
     private String title;

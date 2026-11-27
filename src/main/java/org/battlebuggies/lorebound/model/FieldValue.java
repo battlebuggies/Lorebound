@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 Keeps all the values for the template attributes
  */
 @Entity
-public class AttributeInfo {
+public class FieldValue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,8 +14,10 @@ public class AttributeInfo {
     private String value;
 
     @ManyToOne
-    private Attribute attribute;
+    @JoinColumn(name = "template_field_id")
+    private TemplateField templateField;
 
     @ManyToOne
+    @JoinColumn(name = "article_id")
     private Article article;
 }

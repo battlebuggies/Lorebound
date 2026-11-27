@@ -11,10 +11,10 @@ public class ArticleType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String title;
+    private String type;
 
-    @OneToMany
-    private List<Article> article;
+    @OneToMany(mappedBy = "articleType")
+    private List<Article> articles;
 
 
 
