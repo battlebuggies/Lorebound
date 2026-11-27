@@ -16,6 +16,9 @@ public class TemplateField {
     @OneToMany(mappedBy = "templateField")
     private Set<FieldValue> fieldValue;
 
+    @ManyToMany(mappedBy = "fields")
+    private Set<ArticleType> articleTypes;
+
     public TemplateField() {}
     public TemplateField(int id, String title) {
         this.id = id;

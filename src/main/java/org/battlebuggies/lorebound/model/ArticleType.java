@@ -3,6 +3,7 @@ package org.battlebuggies.lorebound.model;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class ArticleType {
@@ -16,7 +17,11 @@ public class ArticleType {
     @OneToMany(mappedBy = "articleType")
     private List<Article> articles;
 
-
-
-
+    @ManyToMany
+    @JoinTable(
+            name = "article_type_field",
+            joinColumns = @JoinColumn(name = "article_type_id"),
+            inverseJoinColumns = @JoinColumn(name = "field_id")
+    )
+    private Set<TemplateField> fields;
 }
